@@ -45,16 +45,36 @@ public class FXMLController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
 
+    	this.txtResult.clear();
+    	double min;
+    	
+    	try {
+    		min = Double.parseDouble(txtGoals.getText());
+    		this.txtResult.appendText(this.model.creaGrafo(min));
+    	} catch (NumberFormatException e) {
+    		e.printStackTrace();
+    		this.txtResult.setText("Inserire un formato valido nella casella 'Goal'");
+    	}
+    
+    	this.btnTopPlayer.setDisable(false);
+    	this.btnDreamTeam.setDisable(false);
+    	
     }
 
     @FXML
     void doDreamTeam(ActionEvent event) {
 
+    	
+    	
     }
 
     @FXML
     void doTopPlayer(ActionEvent event) {
 
+    	this.txtResult.clear();
+    	this.txtResult.setText("Il miglior giocatore è: "+this.model.giocatoreVincente()+"\n");
+    	this.txtResult.appendText("I giocatori battuti sono: "+this.model.giocatoriBattuti());
+    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -66,6 +86,9 @@ public class FXMLController {
         assert txtGoals != null : "fx:id=\"txtGoals\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
 
+        this.btnTopPlayer.setDisable(true);
+        this.btnDreamTeam.setDisable(true);
+        
     }
     
     public void setModel(Model model) {
